@@ -7,6 +7,7 @@ extern crate rlibc;
 use core::fmt::Write;
 use core::panic::PanicInfo;
 
+mod entry;
 mod serial;
 mod vga;
 
@@ -16,8 +17,7 @@ pub fn panic(_info: &PanicInfo) -> ! {
     loop {}
 }
 
-#[no_mangle]
-pub extern "C" fn kmain() -> ! {
+fn kmain() -> ! {
     // Write "Hello World!" in text to the screen
     {
         let mut writer = serial::SERIAL_WRITER.lock();

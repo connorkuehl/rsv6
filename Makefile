@@ -93,13 +93,10 @@ $(BOOTBLOCK): bootblock.o
 bootblock.o: bootasm.o $(RUST_BOOTLOADER_LIB)
 	$(LD) $(LDFLAGS) --gc-sections -N -e start -Ttext 0x7C00 -o $@ $^
 
-$(KERN_ELF): $(LDSCRIPT) entry.o $(RUST_KERNEL_LIB)
-	$(LD) $(LDFLAGS) --gc-sections -T $(LDSCRIPT) -o $(KERN_ELF) entry.o $(RUST_KERNEL_LIB) -b binary
+$(KERN_ELF): $(LDSCRIPT) $(RUST_KERNEL_LIB)
+	$(LD) $(LDFLAGS) --gc-sections -T $(LDSCRIPT) -o $(KERN_ELF) $(RUST_KERNEL_LIB) -b binary
 	$(OBJDUMP) -S $@ > $@.asm
 	$(OBJDUMP) -t $@ | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $@.sym
-
-entry.o: kernel/entry.S
-	nasm -f elf32 $^ -o $@
 
 bootasm.o: bootloader/bootasm.S
 	nasm -f elf32 $^ -o $@
