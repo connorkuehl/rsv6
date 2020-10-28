@@ -10,7 +10,11 @@ use core::panic::PanicInfo;
 
 mod asm;
 mod entry;
+mod mmu;
+mod param;
 mod serial;
+mod stack;
+mod types;
 mod vga;
 
 #[panic_handler]
