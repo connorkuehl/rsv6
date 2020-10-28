@@ -8,6 +8,7 @@ extern crate rlibc;
 use core::fmt::Write;
 use core::panic::PanicInfo;
 
+mod asm;
 mod entry;
 mod serial;
 mod vga;
