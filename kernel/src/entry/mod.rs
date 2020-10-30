@@ -17,28 +17,28 @@ pub unsafe extern "C" fn _start() {
 
     let epdr = &entrypgdir::ENTRYPGDIR as *const _ as usize;
     asm!(
-        "mov {0}, eax",
-        "mov eax, cr3",
+        "mov eax, {0}",
+        "mov cr3, eax",
         in(reg) epdr
     );
 
     let cr0f = CR0_PG | CR0_WP;
     asm!(
-        "mov cr0, eax",
-        "or eax, {0}",
         "mov eax, cr0",
+        "or eax, {0}",
+        "mov cr0, eax",
         in(reg) cr0f
     );
 
     let stack_bot = &STACK as *const _ as usize;
     let stack_top = stack_bot + KSTACKSIZE;
     asm!(
-        "mov {0}, esp",
+        "mov esp, {0}",
         in(reg) stack_top
     );
 
     asm!(
-        "mov {}, eax",
+        "mov eax, {0}",
         "jmp eax",
         sym kmain
     );
