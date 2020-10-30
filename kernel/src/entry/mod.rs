@@ -22,7 +22,7 @@ pub unsafe extern "C" fn _start() {
         in(reg) epdr
     );
 
-    let cr0f = CR0_PG | CR0_WP;
+    let cr0f = (CR0_PG | CR0_WP) as u32;
     asm!(
         "mov eax, cr0",
         "or eax, {0}",
