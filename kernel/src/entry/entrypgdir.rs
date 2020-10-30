@@ -4,8 +4,7 @@ use crate::types::Pde;
 // Can't use PGSIZE in here...?
 #[repr(align(4096))]
 pub struct EntryPageDir([Pde; NPDENTRIES]);
- 
-// TODO: Make a script generate this...
+
 pub static ENTRYPGDIR: EntryPageDir = EntryPageDir([
     (0 | PTE_P | PTE_W | PTE_PS) as _,
     0,
